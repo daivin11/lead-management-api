@@ -1,3 +1,5 @@
+import email
+
 from flask import Blueprint, request, jsonify
 from services.lead_service import *
 from utils.validators import validate_lead_data
@@ -30,17 +32,19 @@ def get_lead_by_id_route(lead_id):
 @lead_bp.route("/leads", methods=["POST"])
 def create_lead_route():
     data = request.get_json()
-    logger.info(f"Criando lead: {email}")
+
     nome = data.get("nome")
     email = data.get("email")
     interesse = data.get("interesse")
     valor = data.get("valor")
 
+    logger.info(f"Criando lead: {email}") 
+
     error = validate_lead_data(data)
 
     if error:
-     return jsonify({"error": error}), 400
-  
+        return jsonify({"error": error}), 400
+
     lead_id = create_new_lead(nome, email, interesse, valor)
 
     return jsonify({
