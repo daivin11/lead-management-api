@@ -11,7 +11,15 @@ app.register_blueprint(lead_bp)
 
 @app.route("/")
 def home():
-    return "API profissional de leads rodando"
+    return {
+        "message": "Lead Management API 🚀",
+        "endpoints": {
+            "GET /leads": "Listar leads",
+            "GET /leads/{id}": "Buscar lead",
+            "POST /leads": "Criar lead",
+            "DELETE /leads/{id}": "Deletar lead"
+        }
+    }
 
 @app.errorhandler(500)
 def internal_error(error):
